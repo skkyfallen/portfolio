@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
 import { ScanLine, Download } from "lucide-react";
 import { ResumeModal } from "@/src/components/resume/ResumeModal";
 
@@ -16,7 +16,6 @@ const revealVariants = {
 
 export function ResumeSection() {
   const [open, setOpen] = useState(false);
-  const shouldReduceMotion = useReducedMotion();
 
   return (
     <>
@@ -28,7 +27,7 @@ export function ResumeSection() {
         <div className="grid gap-16 lg:grid-cols-[360px_1fr]">
           <motion.div
             className="overflow-hidden"
-            initial={shouldReduceMotion ? "visible" : "hidden"}
+            initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={revealVariants}
@@ -51,7 +50,7 @@ export function ResumeSection() {
             </motion.div>
 
             <motion.div
-              initial={shouldReduceMotion ? "visible" : "hidden"}
+              initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-100px" }}
               variants={revealVariants}

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
 
 const containerVariants = {
   hidden: {},
@@ -31,7 +31,6 @@ const itemVariants = {
 };
 
 export function Hero() {
-  const shouldReduceMotion = useReducedMotion();
 
   return (
     <section
@@ -40,7 +39,7 @@ export function Hero() {
     >
       <motion.div
         className="relative mx-auto w-full max-w-6xl"
-        initial={shouldReduceMotion ? "visible" : "hidden"}
+        initial="hidden"
         animate="visible"
         variants={containerVariants}
       >

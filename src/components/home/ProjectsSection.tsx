@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
 import { projects } from "@/src/data/projects";
 
@@ -14,7 +14,6 @@ const revealVariants = {
 };
 
 export function ProjectsSection() {
-  const shouldReduceMotion = useReducedMotion();
 
   return (
     <section
@@ -25,7 +24,7 @@ export function ProjectsSection() {
         <div className="grid gap-16 lg:grid-cols-[360px_1fr]">
           <motion.div
             className="overflow-hidden"
-            initial={shouldReduceMotion ? "visible" : "hidden"}
+            initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={revealVariants}
@@ -65,7 +64,7 @@ export function ProjectsSection() {
               return (
                 <motion.article
                   key={project.id}
-                  initial={shouldReduceMotion ? "visible" : "hidden"}
+                  initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true, margin: "-100px" }}
                   variants={revealVariants}

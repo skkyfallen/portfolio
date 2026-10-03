@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
 import { GraduationCap, Award, Shield } from "lucide-react";
 
 const skillCategories = [
@@ -91,7 +91,6 @@ const revealVariants = {
 };
 
 export function AboutSection() {
-  const shouldReduceMotion = useReducedMotion();
 
   return (
     <section
@@ -103,7 +102,7 @@ export function AboutSection() {
           {/* Section index / heading */}
           <motion.div
             className="overflow-hidden"
-            initial={shouldReduceMotion ? "visible" : "hidden"}
+            initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={revealVariants}
@@ -128,7 +127,7 @@ export function AboutSection() {
           {/* Content */}
           <div className="space-y-16">
             <motion.div
-              initial={shouldReduceMotion ? "visible" : "hidden"}
+              initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-100px" }}
               variants={revealVariants}
@@ -149,7 +148,7 @@ export function AboutSection() {
 
             <div className="grid gap-12 md:grid-cols-2">
               <motion.div
-                initial={shouldReduceMotion ? "visible" : "hidden"}
+                initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, margin: "-100px" }}
                 variants={revealVariants}
@@ -188,7 +187,7 @@ export function AboutSection() {
               </motion.div>
 
               <motion.div
-                initial={shouldReduceMotion ? "visible" : "hidden"}
+                initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, margin: "-100px" }}
                 variants={revealVariants}
@@ -218,7 +217,7 @@ export function AboutSection() {
             </div>
 
             <motion.div
-              initial={shouldReduceMotion ? "visible" : "hidden"}
+              initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-100px" }}
               variants={revealVariants}

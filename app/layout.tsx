@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/src/components/layout/ThemeProvider";
 import { RightNav } from "@/src/components/layout/RightNav";
+import { MotionProvider } from "@/src/components/layout/MotionProvider";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/src/lib/site";
 
 const geistSans = Geist({
@@ -111,7 +112,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           </a>
           <RightNav />
           <div className="min-h-full pb-20 md:pb-0 md:pr-16">
-            <main id="main">{children}</main>
+            <main id="main">
+              <MotionProvider>{children}</MotionProvider>
+            </main>
           </div>
         </ThemeProvider>
       </body>

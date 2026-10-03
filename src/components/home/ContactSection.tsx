@@ -1,7 +1,7 @@
 "use client";
 
 import type { ComponentType } from "react";
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
 import { Mail, MapPin, Phone, type LucideIcon } from "lucide-react";
 import {
   contactDetails,
@@ -33,7 +33,6 @@ const revealVariants = {
 };
 
 export function ContactSection() {
-  const shouldReduceMotion = useReducedMotion();
 
   return (
     <section
@@ -44,7 +43,7 @@ export function ContactSection() {
         <div className="grid gap-16 lg:grid-cols-[360px_1fr]">
           <motion.div
             className="overflow-hidden"
-            initial={shouldReduceMotion ? "visible" : "hidden"}
+            initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={revealVariants}
@@ -68,7 +67,7 @@ export function ContactSection() {
 
           <div className="grid gap-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
             <motion.div
-              initial={shouldReduceMotion ? "visible" : "hidden"}
+              initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-100px" }}
               variants={revealVariants}
@@ -144,7 +143,7 @@ export function ContactSection() {
             </motion.div>
 
             <motion.div
-              initial={shouldReduceMotion ? "visible" : "hidden"}
+              initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-100px" }}
               variants={revealVariants}
