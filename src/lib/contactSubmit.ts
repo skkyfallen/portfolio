@@ -25,7 +25,12 @@ export interface ContactPayload {
   honeypot?: string;
 }
 
-export type ContactProvider = "placeholder" | "formspree" | "netlify" | "emailjs";
+export type ContactProvider =
+  | "placeholder"
+  | "web3forms"
+  | "formspree"
+  | "netlify"
+  | "emailjs";
 
 /**
  * Result of a submission attempt.
@@ -43,7 +48,7 @@ export type ContactSubmitResult =
  * Which provider to submit through. Selects the adapter at the bottom of
  * this file. Default is the deliberately-fake placeholder.
  */
-export const CONTACT_PROVIDER: ContactProvider = "placeholder";
+export const CONTACT_PROVIDER: ContactProvider = "web3forms";
 /** ================================================================== */
 
 /**
@@ -51,6 +56,20 @@ export const CONTACT_PROVIDER: ContactProvider = "placeholder";
  * select above; the other blocks can stay empty.
  */
 export const CONTACT_PROVIDER_CONFIG = {
+  web3forms: {
+    /**
+     * Web3Forms "access key", from https://web3forms.com/ dashboard.
+     *
+     * NOT A SECRET. Web3Forms publishes this client-side by design: it is a
+     * public identifier that routes mail to your inbox, not a credential that
+     * grants account access. It is safe in source control and in the browser
+     * bundle. Anyone holding it can post to your endpoint, which is exactly why
+     * the honeypot and Web3Forms' own spam filtering matter.
+     */
+    accessKey: "4d410802-67c5-407c-a326-cf86abea3d31",
+    /** Subject line for the notification email. */
+    subject: "New message from your portfolio",
+  },
   formspree: {
     /** The ID from https://formspree.io/f/<id> (e.g. "xabcdefg"). */
     formId: "",
@@ -89,6 +108,8 @@ export async function submitContactForm(
 
   try {
     switch (CONTACT_PROVIDER) {
+      case "web3forms":
+        return await submitWithWeb3Forms(data);
       case "formspree":
         return await submitWithFormspree(data);
       case "netlify":
@@ -126,6 +147,60 @@ export async function submitContactForm(
 async function submitWithPlaceholder(): Promise<ContactSubmitResult> {
   await new Promise((resolve) => setTimeout(resolve, 900));
   return { ok: true, delivered: false };
+}
+
+async function submitWithWeb3Forms(
+  data: SanitizedPayload,
+): Promise<ContactSubmitResult> {
+  const { accessKey, subject } = CONTACT_PROVIDER_CONFIG.web3forms;
+
+  if (!accessKey) {
+    return {
+      ok: false,
+      message: "The form is not configured yet. Please email me directly.",
+    };
+  }
+
+  // `botcheck` is Web3Forms' own honeypot field. Our own honeypot already
+  // short-circuits before this runs, but sending it explicitly means Web3Forms
+  // applies its filtering too rather than treating the field as absent.
+  const response = await fetch("https://api.web3forms.com/submit", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      access_key: accessKey,
+      subject,
+      name: data.name,
+      email: data.email,
+      message: data.message,
+      from_name: data.name,
+      reply_to: data.email,
+      botcheck: "",
+    }),
+  });
+
+  // Web3Forms answers 200 even for some failures, so the body's `success`
+  // flag is the authority — not the HTTP status.
+  let payload: { success?: boolean; message?: string } = {};
+  try {
+    payload = await response.json();
+  } catch {
+    // Non-JSON response (e.g. a gateway error page); fall through to generic.
+  }
+
+  if (!response.ok || payload.success !== true) {
+    return {
+      ok: false,
+      message:
+        payload.message ||
+        "Your message could not be sent. Please try again, or email me directly.",
+    };
+  }
+
+  return { ok: true, delivered: true };
 }
 
 async function submitWithFormspree(
