@@ -13,6 +13,14 @@ const eslintConfig = defineConfig([
     "build/**",
     "next-env.d.ts",
   ]),
+  {
+    files: ["src/components/layout/ThemeToggle.tsx"],
+    rules: {
+      // Standard hydration-mismatch guard: render a stable placeholder on the
+      // server and during hydration, then reveal the theme-dependent icon.
+      "react-hooks/set-state-in-effect": "off",
+    },
+  },
 ]);
 
 export default eslintConfig;

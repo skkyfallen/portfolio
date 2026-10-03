@@ -1,26 +1,133 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Light mode: warm paper field, near-black type, cobalt signal. */
+  --background: #faf8f3;
+  --foreground: #0a0a0a;
+  --muted: #f0ede6;
+  --muted-foreground: #525252;
+  --card: #f5f2eb;
+  --card-foreground: #0a0a0a;
+  --border: #e5e2db;
+  --accent: #2563eb;
+  --accent-foreground: #ffffff;
+  --primary: #0a0a0a;
+  --primary-foreground: #faf8f3;
+  --ring: #2563eb;
+
+  /* Brutalist zero-radius system. */
+  --radius-sm-value: 0rem;
+  --radius-md-value: 0rem;
+  --radius-lg-value: 0rem;
+
+  /* Type scale. */
+  --font-display: clamp(3rem, 13vw, 9rem);
+  --font-h1: 2.5rem;
+  --font-h2: 1.625rem;
+  --font-h3: 1.25rem;
+  --font-body: 1rem;
+  --font-small: 0.875rem;
+  --font-micro: 0.75rem;
+}
+
+.dark {
+  /* Dark mode: near-black canvas, warm off-white type, cobalt signal. */
+  --background: #0a0a0a;
+  --foreground: #f2f0e9;
+  --muted: #141414;
+  --muted-foreground: #a3a3a3;
+  --card: #0f0f0f;
+  --card-foreground: #f2f0e9;
+  --border: #262626;
+  --accent: #2563eb;
+  --accent-foreground: #ffffff;
+  --primary: #f2f0e9;
+  --primary-foreground: #0a0a0a;
+  --ring: #2563eb;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-ring: var(--ring);
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --text-display: var(--font-display);
+  --text-h1: var(--font-h1);
+  --text-h2: var(--font-h2);
+  --text-h3: var(--font-h3);
+  --text-body: var(--font-body);
+  --text-small: var(--font-small);
+  --text-micro: var(--font-micro);
+
+  /* Zero-radius mapping. */
+  --radius-sm: var(--radius-sm-value);
+  --radius-md: var(--radius-md-value);
+  --radius-lg: var(--radius-lg-value);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
-}
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  ::selection {
+    background-color: var(--foreground);
+    color: var(--background);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+
+    html {
+      scroll-behavior: auto !important;
+    }
+  }
+
+  .react-pdf__Page canvas {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Subtle, theme-aware scrollbar. */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--border);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--muted-foreground);
+  }
 }
