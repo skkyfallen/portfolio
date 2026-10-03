@@ -1,0 +1,19 @@
+# Cloudflare _redirects
+# Legacy multi-route paths -> single-page anchors.
+#
+# These replace next.config `redirects()`, which Next DROPS under
+# output: "export".
+#
+# Fragments in the DESTINATION are supported by Cloudflare and are sent to the
+# browser, which then scrolls to the section. Fragments in the SOURCE are never
+# seen by Cloudflare, so they cannot be matched.
+#
+# Both trailing-slash variants are listed: /about and /about/ are distinct
+# sources to Cloudflare, and a bookmark may carry either.
+
+/about    /#about    308
+/about/   /#about    308
+/resume   /#resume   308
+/resume/  /#resume   308
+/contact  /#contact  308
+/contact/ /#contact  308

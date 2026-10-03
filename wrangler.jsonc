@@ -1,0 +1,14 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "portfolio",
+  "compatibility_date": "2026-10-03",
+  // Assets-only Worker: no `main`, no `binding`. Cloudflare serves the
+  // exported files from `out/` directly — there is no Worker script and no
+  // runtime cost.
+  "assets": {
+    "directory": "./out",
+    // Serves out/404.html for unmatched routes instead of a bare 404.
+    "not_found_handling": "404-page",
+    "html_handling": "auto-trailing-slash"
+  }
+}

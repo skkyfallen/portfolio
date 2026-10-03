@@ -5,6 +5,11 @@ export const alt = "Kenechukwu Ekwonu — Cybersecurity Graduate Student";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
+// Rendered at build time rather than per request. Required for `output: "export"`
+// (the Cloudflare static deployment target), which rejects any route that is not
+// explicitly static.
+export const dynamic = "force-static";
+
 const hostname = new URL(SITE_URL).host;
 
 export default function OpengraphImage() {
