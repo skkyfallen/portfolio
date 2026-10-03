@@ -121,9 +121,14 @@ export async function submitContactForm(
         return await submitWithPlaceholder();
     }
   } catch {
+    // A thrown fetch error here means the request never got a response — almost
+    // always a network/CORS block rather than a transient hiccup. The common
+    // cause is the site's origin not being registered with the provider, which
+    // retrying cannot fix, so point the visitor at a working channel instead.
     return {
       ok: false,
-      message: "Something went wrong while sending. Please try again.",
+      message:
+        "The form could not reach the server. Please email me directly at kekwonu@emich.edu.",
     };
   }
 }
