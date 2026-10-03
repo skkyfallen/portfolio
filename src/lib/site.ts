@@ -2,13 +2,13 @@
  * Canonical site facts, shared by metadata, the sitemap, robots.txt, and the
  * generated Open Graph image so those values never drift apart.
  *
- * ⚠️ PLACEHOLDER DOMAIN — CHANGE THIS BEFORE DEPLOYING ⚠️
- * The URL below is a placeholder. Replace `https://ekwonu.dev` with the real
- * production origin (scheme + host, no trailing slash). Every absolute URL on
- * the site — canonical/Open Graph URLs, the sitemap entries, and the
- * `Sitemap:` line in robots.txt — is derived from this single constant.
+ * `SITE_URL` is the single source of truth for every absolute URL on the site:
+ * canonical/Open Graph URLs, the sitemap entries, the `Sitemap:` line in
+ * robots.txt, and the hostname printed on the OG image. Change it in one place.
+ *
+ * Format: scheme + host, no trailing slash.
  */
-export const SITE_URL = "https://ekwonu.dev";
+export const SITE_URL = "https://portfolio.hackpath.org";
 
 export const SITE_NAME = "Kenechukwu Ekwonu";
 
